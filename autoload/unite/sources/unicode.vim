@@ -1,6 +1,3 @@
-let g:unite_unicode_loaded = 0
-let g:unicodeData = readfile("/home/sanford/.vim/local/unite-unicode/data/unicode_trimmed.txt")
-
 let s:unite_source = {
             \ 'name': 'unicode',
             \ 'hooks': {},
@@ -18,17 +15,23 @@ function! s:unite_source.hooks.on_close(args, context)
     " execute s:colorscheme(s:beforecolor)
 endfunction
 
-function! s:printCharacter(line)
+function! s:select(line)
 endfunction
 
 function! s:unite_source.gather_candidates(args, context)
-    let unicode = copy(g:unicodeData)
-    return map(unicode, '{
-                \ "word": printf("%s", v:val),
+    let filelist = unite#util#sort_by(unite#util#uniq(
+                 \ map(split(globpath("/home/sanford/.vim/local/unite-unicode/data/", '*.txt'), '\n'),
+                 \'[fnamemodify(v:val, ":t:r"), fnamemodify(v:val, ":p")]'), 'v:val[0]'),
+                 \'v:val[0]')
+
+    return map(filelist, '{
+                \ "word": v:val[0],
                 \ "source": "unicode",
                 \ "kind": "unicode",
-                \ "action__command": s:printCharacter(v:val[0]),
+                \ "action__command": s:select(v:val[0]),
                 \ "action__type": ": ",
+                \ "action__path": v:val[1],
+                \ "action__directory": fnamemodify(v:val[1], ":h"),
                 \ }')
 endfunction
 

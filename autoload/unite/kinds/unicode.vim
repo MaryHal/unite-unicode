@@ -10,13 +10,12 @@ let s:kind.action_table.execute = {
             \ }
 
 function! s:kind.action_table.execute.func(candidates)
-    for line in a:candidates
-        let glyph = matchstr(line.word, ';\x\{4,5}')
-        let writable = nr2char(str2nr(glyph[1:], 16))
+    if len(a:candidates) != 1
+        echo "Too many selections"
+        return
+    endif
 
-        exe "norm i" . eval("\"" . writable . "\"")
-        echo printf("%s %s", glyph, writable)
-    endfor
+    call unite#start(["unicodeSelect"], { "codeset" : a:candidates[0].word })
 endfunction
 
 function! unite#kinds#unicode#define()
