@@ -7,8 +7,12 @@ let s:unite_source = {
 
 function! s:unite_source.gather_candidates(args, context)
     let codeset = a:context.codeset
-    echom codeset
-    let unicode = readfile("/home/sanford/.vim/local/unite-unicode/data/" . codeset . ".txt")
+
+    let thispath = expand('<sfile>:p:h')
+    let filepath = thispath . "/../../../data/" . codeset . ".txt"
+
+    let unicode = readfile(filepath)
+
     return map(unicode, '{
                 \ "word": printf("%s", v:val),
                 \ "source": "unicodeSelect",
