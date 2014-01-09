@@ -7,9 +7,7 @@ let s:unite_source = {
 
 function! s:unite_source.gather_candidates(args, context)
     let codeset = a:context.codeset
-
-    let thispath = expand('<sfile>:p:h')
-    let filepath = thispath . "/../../../data/" . codeset . ".txt"
+    let filepath = g:unite_unicode_data_path . codeset . ".txt"
 
     let unicode = readfile(filepath)
 
