@@ -5,7 +5,6 @@ let s:unite_source = {
             \ }
 
 function! s:unite_source.gather_candidates(args, context)
-    echo g:unite_unicode_data_path
     let filelist = unite#util#sort_by(unite#util#uniq(
                  \ map(split(globpath(g:unite_unicode_data_path, '*.txt'), '\n'),
                  \'[fnamemodify(v:val, ":t:r"), fnamemodify(v:val, ":p")]'), 'v:val[0]'),

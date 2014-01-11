@@ -14,7 +14,7 @@ function! s:kind.action_table.execute.func(candidates)
         let glyph = matchstr(line.word, ';\x\{4,5}')
         let writable = nr2char(str2nr(glyph[1:], 16))
 
-        exe "norm i" . eval("\"" . writable . "\"")
+        exe "norm a" . eval("\"" . writable . "\"")
         " echo printf("%s%s", writable, glyph)
     endfor
 endfunction
